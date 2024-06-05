@@ -4,6 +4,7 @@ import { fetchTodos, addATodo } from "@/data/firestore";
 
 //모든 할 일 가져오기
 export async function GET(request: NextRequest) {
+  
   const fetchedTodos = await fetchTodos();
 
   const response = {

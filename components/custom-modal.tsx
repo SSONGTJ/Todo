@@ -32,4 +32,4 @@ const CustomModal = ({focusedTodo , modalType, onClose}:{focusedTodo:Todo , moda
     )
 }
 
-export default CustomModal
+export default CustomModal;

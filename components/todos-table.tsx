@@ -8,7 +8,7 @@ import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Input, 
 import {VerticalDotsIcon} from "./icons";
 import {Todo, FocusedTodoType, CustomModalType} from "@/types"
 import { useRouter } from "next/navigation"
-import { CustomModal } from "./custom-modal"
+import CustomModal from "@/components/custom-modal"
 
 const TodosTable = ({todos}:{todos:Todo[]}) => {
 
@@ -162,7 +162,7 @@ const TodosTable = ({todos}:{todos:Todo[]}) => {
           <TableColumn>액션</TableColumn>
         </TableHeader>
         <TableBody emptyContent={"보여줄 데이터가 없습니다."}>
-          {todos && todos.map((aTodo:Todo) => (
+          {todos && todos.map((aTodo: Todo) => (
             TodoRow(aTodo)
           ))}
         </TableBody>

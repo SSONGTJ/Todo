@@ -47,7 +47,7 @@ export async function fetchTodos() {
 
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
+    // console.log(doc.id, " => ", doc.data());
 
     const aTodo = {
       id: doc.id,
@@ -55,7 +55,7 @@ export async function fetchTodos() {
       is_done: doc.data()["is_done"],
       created_at: doc.data()["created_at"].toDate(),
     };
-
+    // .toLocaleTimeString('ko')
     fetchedTodos.push(aTodo);
   });
 
@@ -67,13 +67,13 @@ export async function addATodo({ title }) {
   // Add a new document with a generated id
   const newTodoRef = doc(collection(db, "todos"));
 
-  const createdAtTImestamp = Timestamp.fromDate(new Date());
+  const createdAtTimestamp = Timestamp.fromDate(new Date());
 
   const newTodoData = {
     id: newTodoRef.id,
     title: title,
     is_done: false,
-    created_at: createdAtTImestamp,
+    created_at: createdAtTimestamp,
   };
 
   // later...
