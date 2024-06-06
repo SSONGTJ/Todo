@@ -5,15 +5,15 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 };
 
 export type Todo = {
-  id:string;
-  title:string;
-  is_done:boolean;
-  created_at:Date;
-}
+  id: string;
+  title: string;
+  is_done: boolean;
+  created_at: Date;
+};
 
-export type CustomModalType = 'detail', 'update', 'delete'
+export type CustomModalType = "detail" | "update" | "delete";
 
 export type FocusedTodoType = {
-  focusedTodo:Todo | null,
-  modalType:CustomModalType
-}
+  focusedTodo: Todo | null;
+  modalType: CustomModalType;
+};

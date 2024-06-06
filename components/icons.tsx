@@ -214,7 +214,12 @@ export const NextUILogo: React.FC<IconSvgProps> = (props) => {
   );
 };
 
-export const VerticalDotsIcon = ({size = 24, width = 40, height = 40, ...props}) => (
+export const VerticalDotsIcon = ({
+  size = 24,
+  width = 40,
+  height = 40,
+  ...props
+}) => (
   <svg
     aria-hidden="true"
     fill="none"
@@ -231,4 +236,3 @@ export const VerticalDotsIcon = ({size = 24, width = 40, height = 40, ...props})
     />
   </svg>
 );
-
