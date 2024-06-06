@@ -47,7 +47,43 @@ const TodosTable = ({todos}:{todos:Todo[]}) => {
     setNewTodoInput('');
     router.refresh();
     setIsLoading(false);
-    notifyTodoAddedEvent("할일이 성공적으로 추가 되었음");
+    notifySuccessEvent("할일이 성공적으로 추가 되었음");
+  }
+
+  const updateATodoHandler = async (
+    id:string, updatedTitle:string, updatedIsDone:boolean)=>{
+
+    setIsLoading(true);
+
+    await new Promise(f=>setTimeout(f,600));
+
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
+      method:'post',
+      body:JSON.stringify({
+        title:updatedTitle,
+        is_done:updatedIsDone
+      }),
+      cache:'no-store'
+    });
+    router.refresh();
+    setIsLoading(false);
+    notifySuccessEvent("할일이 성공적으로 수정 되었음");
+  }
+
+  const deleteATodoHandler = async (
+    id:string)=>{
+
+    setIsLoading(true);
+
+    await new Promise(f=>setTimeout(f,600));
+
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
+      method:'delete',
+      cache:'no-store'
+    });
+    router.refresh();
+    setIsLoading(false);
+    notifySuccessEvent("할일이 삭제되었음");
   }
 
   const disabledTodoAddButton = ()=>{
@@ -67,12 +103,15 @@ const TodosTable = ({todos}:{todos:Todo[]}) => {
   </Popover>
   }
 
+  const applyIsDoneUI = (isDone:boolean) =>
+  (isDone ? "line-through text-gray-900/50 dark:text-white/50" : "")
+
   const TodoRow = (aTodo:Todo)=>{
     return <TableRow key={aTodo.id}>
-    <TableCell>{aTodo.id.slice(0,4)}</TableCell>
-    <TableCell>{aTodo.title}</TableCell>
+    <TableCell className={applyIsDoneUI(aTodo.is_done)}>{aTodo.id.slice(0,4)}</TableCell>
+    <TableCell className={applyIsDoneUI(aTodo.is_done)}>{aTodo.title}</TableCell>
     <TableCell>{aTodo.is_done ? "✔︎" : "✕"}</TableCell>
-    <TableCell>{`${aTodo.created_at}`}</TableCell>
+    <TableCell className={applyIsDoneUI(aTodo.is_done)}>{`${aTodo.created_at}`}</TableCell>
     <TableCell>
       <div className="relative flex justify-end items-center gap-2">
             <Dropdown>
@@ -82,7 +121,7 @@ const TodosTable = ({todos}:{todos:Todo[]}) => {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu onAction={(key)=>{
-                console.log(`aTodo:id : ${aTodo.id} / key : ${key}`)
+                // console.log(`aTodo:id : ${aTodo.id} / key : ${key}`)
                 setCurrentModalData({focusedTodo:aTodo, modalType:key as CustomModalType})
                 onOpen();
               }}>
@@ -96,7 +135,7 @@ const TodosTable = ({todos}:{todos:Todo[]}) => {
   </TableRow>
   }
   
-  const notifyTodoAddedEvent = (msg:string) => toast.success(msg);
+  const notifySuccessEvent = (msg:string) => toast.success(msg);
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -110,6 +149,14 @@ const TodosTable = ({todos}:{todos:Todo[]}) => {
               focusedTodo={currentModalData.focusedTodo}
               modalType={currentModalData.modalType}
               onClose={onClose}
+              onUpdate={async (id,title,isDone)=>{
+                await updateATodoHandler(id,title,isDone);
+                onClose();
+              }}
+              onDelete={async(id)=>{
+                await deleteATodoHandler(id);
+                onClose();
+              }}
             />
           )
         )}
