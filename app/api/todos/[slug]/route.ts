@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { fetchATodo, deleteATodo, editATodo } from "@/data/firestore";
+import { fetchATodo, deleteATodo, editATodo } from "@/data/firestore.mjs";
 
 // 할 일 단일조회
 export async function GET(

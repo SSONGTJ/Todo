@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { fetchTodos, addATodo } from "@/data/firestore";
+import { fetchTodos, addATodo } from "@/data/firestore.mjs";
 
 //모든 할 일 가져오기
 export async function GET(request: NextRequest) {
