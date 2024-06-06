@@ -7,9 +7,11 @@ async function fetchTodosApiCall() {
     cache: "no-store",
   });
 
-  const contentTypeCheck = res.headers.get("content-type");
+  const contentTypeHeaderValue = res.headers.get("content-type");
 
-  console.log("contentTypeCheck : ", contentTypeCheck);
+  if (contentTypeHeaderValue?.includes("text/html")) {
+    return null;
+  }
 
   return res.json();
 }
@@ -17,10 +19,12 @@ async function fetchTodosApiCall() {
 export default async function TodosPage() {
   const response = await fetchTodosApiCall();
 
+  const fetchedTodos = response?.data ?? [];
+
   return (
     <div className="flex flex-col space-y-8">
       <h1 className={title()}>Todos</h1>
-      <TodosTable todos={response.data ?? []} />
+      <TodosTable todos={fetchedTodos} />
     </div>
   );
 }
